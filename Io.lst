@@ -1,0 +1,95 @@
+Microsoft (R) Macro Assembler Version 6.00     		    05/17/98 10:44:10
+Io.asm							     Page 1 - 1
+
+
+				;***********************************************************************\
+				;*                                Io.asm                               *
+				;*                 Copyright (C) by Stangl Roman, 1992                 *
+				;* This Code may be freely distributed, provided the Copyright isn't   *
+				;* removed.                                                            *
+				;*                                                                     *
+				;* IO.asm       Additional utility procedures for ShutDown/2 with IOPL *
+				;*                                                                     *
+				;* Part of this code from: Keith Murray (murrayk@prism.cs.orst.edu)    *
+				;*                         Joel Armengaud (joe2@vnet.ibm.com)          *
+				;*                                                                     *
+				;***********************************************************************/
+
+ 0000				IOPLCSEG SEGMENT PARA PUBLIC USE16 'CODE'
+				      ASSUME  CS:IOPLCSEG, DS:NOTHING
+
+ 0000  40 28 23 29 20 24	        db      "@(#) $Header: Io.asm Version 0.10 01,1993 $ (LBL)";
+       48 65 61 64 65 72
+       3A 20 49 6F 2E 61
+       73 6D 20 56 65 72
+       73 69 6F 6E 20 30
+       2E 31 30 20 30 31
+       2C 31 39 39 33 20
+       24 20 28 4C 42 4C
+       29
+
+ 000A				args    struc                           ; Structure for arguments passed on stack
+ 0000  0000			                dw      0h              ;   BP+00 : Saved BP
+ 0002  0000			                dw      0h              ;   BP+02 : IP of return address
+ 0004  0000			                dw      0h              ;   BP+04 : CS of return address
+ 0006  0000			        arg1    dw      0h              ;   BP+06 : First parameter passed
+ 0008  0000			        arg2    dw      0h              ;   BP+08 : Second parameter passed
+				args    ends
+
+				PUBLIC  IN8                             ; IN arg1
+ 0031				IN8     PROC    FAR
+ 0031  55			        PUSH    BP
+ 0032  8B EC			        MOV     BP,SP
+ 0034  8B 56 06			        MOV     DX,[BP+06h]             ; Get port
+ 0037  EC			        IN      AL,DX                   ; Get data from port
+ 0038  B4 00			        MOV     AH,0h
+ 003A  5D			        POP     BP
+ 003B  CA 0002			        RET     2                       ; Clear stack
+ 003E				IN8     ENDP
+
+				PUBLIC  OUT8                            ; OUT arg1, arg2
+ 003E				OUT8    PROC    FAR
+ 003E  55			        PUSH    BP
+ 003F  8B EC			        MOV     BP,SP
+ 0041  8B 56 08			        MOV     DX,[BP+08h]             ; Get port
+ 0044  8B 46 06			        MOV     AX,[BP+06h]             ; Get data
+ 0047  EE			        OUT     DX,AL                   ; Out data at port
+ 0048  5D			        POP     BP
+ 0049  CA 0004			        RET     4                       ; Clear stack
+ 004C				OUT8    ENDP
+
+ 004C				IOPLCSEG   ENDS
+				   END
+
+Microsoft (R) Macro Assembler Version 6.00     		    05/17/98 10:44:10
+Io.asm							     Symbols 2 - 1
+
+
+
+
+Structures and Unions:
+
+                N a m e                  Size
+                                         Offset      Type
+
+args . . . . . . . . . . . . . .	 000A
+  arg1 . . . . . . . . . . . . .	 0006	     Word
+  arg2 . . . . . . . . . . . . .	 0008	     Word
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+IOPLCSEG . . . . . . . . . . . .	16 Bit	 004C	  Para	  Public  'CODE'	
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+IN8  . . . . . . . . . . . . . .	P Far	 0031	  IOPLCSEG	Length= 000D Public
+OUT8 . . . . . . . . . . . . . .	P Far	 003E	  IOPLCSEG	Length= 000E Public
+
+	   0 Warnings
+	   0 Errors

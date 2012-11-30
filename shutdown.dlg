@@ -1,0 +1,128 @@
+DLGINCLUDE 1 "H:\programming\shutdown\ShutDown.h"
+
+DLGTEMPLATE ID_SHUTDOWNDIALOG PRELOAD FIXED
+BEGIN
+    DIALOG  "ShutDown/2 System ShutDown Information", ID_SHUTDOWNDIALOG, 0, 
+            10, 260, 128, FS_NOMOVEWITHOWNER | FS_SYSMODAL | NOT 
+            FS_DLGBORDER | FS_BORDER | WS_VISIBLE, FCF_TITLEBAR
+    BEGIN
+        GROUPBOX        "System Status Information", -1, 5, 66, 250, 61
+        CTEXT           "The UPS battery capacity is now empty. All disk act"
+                        "ivity will be stopped and the system will be shut d"
+                        "own by SD/2. When all disk activity has stopped, th"
+                        "e power should be turned off, either by the PS/2's "
+                        "power switch manually or via an external logic.", 
+                        IDS_SHUTDOWNINFO, 10, 68, 240, 51, DT_WORDBREAK | 
+                        NOT WS_GROUP
+                        PRESPARAMS PP_FOREGROUNDCOLOR, 0x00FF0000L
+                        PRESPARAMS PP_FONTNAMESIZE, "12.Helv"
+        GROUPBOX        "User Information", -1, 5, 4, 250, 61
+        CTEXT           "", IDS_USERINFO, 10, 7, 240, 50, DT_WORDBREAK | NOT 
+                        WS_GROUP
+                        PRESPARAMS PP_FOREGROUNDCOLOR, 0x00FF0000L
+                        PRESPARAMS PP_FONTNAMESIZE, "12.Helv"
+    END
+END
+
+DLGTEMPLATE ID_CONFIG PRELOAD MOVEABLE DISCARDABLE
+BEGIN
+    DIALOG  "ShutDown/2 Configuration", ID_CONFIG, 12, -50, 269, 195, NOT 
+            FS_DLGBORDER | FS_BORDER | WS_VISIBLE, FCF_TITLEBAR
+    BEGIN
+        GROUPBOX        "UPS Battery Capacity", GRP_UPS_BATTERYCAPACITY, 3, 
+                        158, 106, 35
+        LTEXT           "Hours:", -1, 8, 173, 40, 8
+        LTEXT           "Minutes:", -1, 8, 162, 40, 8
+        ENTRYFIELD      "", IDUBC_HOURS, 50, 173, 16, 8, ES_MARGIN | 
+                        ES_READONLY
+        ENTRYFIELD      "", IDUBC_MINUTES, 50, 162, 16, 8, ES_MARGIN | 
+                        ES_READONLY
+        GROUPBOX        "Alert Start", GRP_UPS_ALERTSTART, 113, 158, 70, 35
+        LTEXT           "Hours:", -1, 118, 173, 40, 8
+        LTEXT           "Minutes:", -1, 118, 162, 40, 8
+        ENTRYFIELD      "", IDUAS_HOURS, 160, 173, 16, 8, ES_MARGIN | 
+                        ES_READONLY
+        ENTRYFIELD      "", IDUAS_MINUTES, 160, 162, 16, 8, ES_MARGIN | 
+                        ES_READONLY
+        GROUPBOX        "Alert ShutDown", GRP_UPS_ALERTSHUTDOWN, 187, 158, 
+                        78, 35
+        LTEXT           "Hours:", -1, 191, 173, 40, 8
+        LTEXT           "Minutes:", -1, 191, 162, 40, 8
+        ENTRYFIELD      "", IDUASD_HOURS, 233, 173, 16, 8, ES_MARGIN | 
+                        ES_READONLY
+        ENTRYFIELD      "", IDUASD_MINUTES, 233, 162, 16, 8, ES_MARGIN | 
+                        ES_READONLY
+        GROUPBOX        "Application started at Alert ShutDown", GRP_SESSION, 
+                        3, 110, 180, 46
+        LTEXT           "Path and Filename:", -1, 8, 136, 84, 8
+        LTEXT           "Directory:", -1, 8, 125, 84, 8
+        LTEXT           "Parameter(s):", -1, 8, 114, 84, 8
+        ENTRYFIELD      "", IDS_PGMNAME, 94, 136, 82, 8, ES_MARGIN
+        ENTRYFIELD      "", IDS_PGMDIRECTORY, 94, 125, 82, 8, ES_MARGIN
+        ENTRYFIELD      "", IDS_PGMINPUTS, 94, 114, 82, 8, ES_MARGIN
+        GROUPBOX        "SD/2 ShutDown", GRP_UPS_SHUTDOWN, 187, 111, 78, 45
+        LTEXT           "Hours:", -1, 191, 136, 40, 8
+        LTEXT           "Minutes:", -1, 191, 125, 40, 8
+        ENTRYFIELD      "", IDUS_HOURS, 233, 136, 16, 8, ES_MARGIN | 
+                        ES_READONLY
+        ENTRYFIELD      "", IDUS_MINUTES, 233, 125, 16, 8, ES_MARGIN | 
+                        ES_READONLY
+        GROUPBOX        "ShutDown User Information", GRP_USERINFO, 3, 75, 
+                        262, 34
+        MLE             "", IDS_USERINFO, 9, 79, 250, 20, MLS_WORDWRAP | 
+                        MLS_VSCROLL | MLS_IGNORETAB
+        GROUPBOX        "UPS controls SD/2 via", GRP_MODE, 4, 20, 261, 54
+        AUTORADIOBUTTON "COM1 (3F8)", IDM_COM1, 8, 55, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "COM2 (2F8)", IDM_COM2, 8, 44, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "COM3 (3220)", IDM_COM3, 8, 33, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "COM4 (3228)", IDM_COM4, 8, 22, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "COM5 (4220)", IDM_COM5, 91, 55, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "COM6 (4228)", IDM_COM6, 91, 44, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "COM7 (5220)", IDM_COM7, 91, 33, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "COM8 (5228)", IDM_COM8, 91, 22, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "LPT1 (3BC)", IDM_LPT1, 174, 55, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "LPT2 (378)", IDM_LPT2, 174, 44, 65, 10, WS_TABSTOP
+        AUTORADIOBUTTON "LPT3 (278)", IDM_LPT3, 174, 33, 65, 10, WS_TABSTOP
+        DEFPUSHBUTTON   "~Ok", DID_OK, 4, 3, 40, 14, WS_GROUP
+        PUSHBUTTON      "~Cancel", DID_CANCEL, 115, 3, 40, 14, WS_GROUP
+        PUSHBUTTON      "~Help", 431, 225, 3, 40, 14, BS_HELP
+        AUTORADIOBUTTON "Card", IDM_ADAPTER, 174, 22, 65, 10, WS_TABSTOP | 
+                        WS_DISABLED
+    END
+END
+
+DLGTEMPLATE ID_ABOUT PRELOAD MOVEABLE DISCARDABLE
+BEGIN
+    DIALOG  "About ShutDown/2", ID_ABOUT, 43, -18, 269, 143, WS_VISIBLE, 
+            FCF_TITLEBAR
+    BEGIN
+        CTEXT           "SD/2 - ShutDown/2 Version 1.01 for IBM OS/2 2.x", 
+                        -1, 40, 131, 212, 8, NOT WS_GROUP
+        CTEXT           "Copyright (C) by Stangl Roman, 06, 1993", 
+                        GRP_SESSION, 40, 123, 212, 8, NOT WS_GROUP
+        CTEXT           "Copyright (C) by Friedrich Schmieder, 06, 1993", -1, 
+                        40, 115, 212, 8, NOT WS_GROUP
+        CONTROL         ID_SHUTDOWN, ID_SHUTDOWN, 8, 103, 20, 16, WC_STATIC, 
+                        SS_BITMAP | WS_VISIBLE
+        LTEXT           "E-Mail: or", -1, 40, 94, 30, 16, DT_WORDBREAK | NOT 
+                        WS_GROUP
+        LTEXT           "rstangl@vnet.ibm.com (Roman Stangl)", -1, 76, 102, 
+                        176, 8, DT_WORDBREAK | NOT WS_GROUP
+        LTEXT           "SFRIEDRICH@vnet.ibm.com (Friedrich Schmieder)", -1, 
+                        76, 85, 176, 16, DT_WORDBREAK | NOT WS_GROUP
+        CTEXT           "SD/2 is an UPS (Uninterruptable Power Supply) contr"
+                        "olled OS/2 2.x ShutDown controller. If line power f"
+                        "ails, this is recognized by SD/2 and according to c"
+                        "onfigurable time stamps the system is shut down in "
+                        "a controlled procedure.", -1, 7, 48, 255, 32, 
+                        DT_WORDBREAK | NOT WS_GROUP
+                        PRESPARAMS PP_FONTNAMESIZE, ". "
+        CTEXT           "Via an external logic, the PS/2's power supply is t"
+                        "hen turned off. A reappearing line power either int"
+                        "errupts the ShutDown or turns the PS/2 on again.", 
+                        -1, 7, 19, 255, 25, DT_WORDBREAK | NOT WS_GROUP
+                        PRESPARAMS PP_FONTNAMESIZE, ". "
+        DEFPUSHBUTTON   "~Ok", DID_OK, 6, 3, 40, 14, WS_GROUP
+        PUSHBUTTON      "~Help", 601, 224, 3, 40, 14, BS_HELP
+    END
+END

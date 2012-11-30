@@ -1,0 +1,18 @@
+NAME            SHUTDOWN    WINDOWAPI
+NEWFILES
+
+DESCRIPTION '$@#(C) Roman Stangl (rstangl@vnet.ibm.com):V1.01 (06,1993) (SD2.exe)#@SD/2'
+
+SEGMENTS
+    IOPLCSEG CLASS 'CODE' IOPL
+ 
+DATA            MULTIPLE
+STACKSIZE       16384
+HEAPSIZE        16384
+PROTMODE
+
+EXPORTS
+    IN8         1
+    OUT8        2
+
+

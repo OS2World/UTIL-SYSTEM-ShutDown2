@@ -1,0 +1,35 @@
+#include    <os2.h>
+#include    "ShutDown.h"
+
+POINTER     IDP_ICON1 PRELOAD           SD1.ico
+POINTER     IDP_ICON2 PRELOAD           SD2.ico
+BITMAP      ID_SHUTDOWN PRELOAD         ShutDown.bmp
+
+MENU        ID_SHUTDOWN PRELOAD
+BEGIN
+    MENUITEM        "E~xit",            ID_EXIT, MIS_TEXT
+    MENUITEM        "~Config",          ID_CONFIG, MIS_TEXT
+    MENUITEM        "~About",           ID_ABOUT, MIS_TEXT
+    MENUITEM        "~Help",            ID_HELP, MIS_TEXT
+END
+
+ACCELTABLE  ID_SHUTDOWN PRELOAD
+BEGIN
+    VK_F3,                              ID_EXIT, VIRTUALKEY
+END
+
+HELPTABLE       MAIN_HELP_TABLE
+BEGIN
+    HELPITEM    ID_SHUTDOWN, MAIN_HELP_SUBTABLE, ID_HELP
+END
+
+HELPSUBTABLE    MAIN_HELP_SUBTABLE
+BEGIN
+    HELPSUBITEM ID_HELP,                ID_HELP
+    HELPSUBITEM ID_ABOUT,               ID_ABOUT
+    HELPSUBITEM ID_CONFIG,              ID_CONFIG
+END
+
+rcinclude   ShutDown.dlg
+
+
